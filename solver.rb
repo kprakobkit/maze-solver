@@ -29,16 +29,17 @@ class MazeSolver
     @steps = 0
 
     until unexplored.empty?
-      current_tile = unexplored.shift
+      current_tile = unexplored.pop
       explored.push(current_tile)
       @steps += 1
       return true if @maze[current_tile].value == "*"
 
-      @maze[current_tile].value = "x"
-      draw_maze
       @maze[current_tile].nodes.each do |neighboring_tile|
         unexplored.push(neighboring_tile) unless explored.include?(neighboring_tile) || unexplored.include?(neighboring_tile)
       end
+
+      @maze[current_tile].value = "x"
+      draw_maze
     end
 
     false
@@ -85,6 +86,7 @@ class MazeSolver
       print tile.value
       print "\n" if x == 9
     end
+    puts "Step: #{@steps}"
     sleep 0.15
   end
 
